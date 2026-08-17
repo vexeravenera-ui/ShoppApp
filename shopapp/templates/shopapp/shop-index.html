@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мой Магазин</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e1e2f 0%, #2a2a40 100%);
+            color: #f4f4f9;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 25px;
+            color: #ffffff;
+            letter-spacing: 1px;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 35px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 28px;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #ffffff;
+            background: linear-gradient(45deg, #007bff, #00d2ff);
+            border: none;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 123, 255, 0.5);
+            background: linear-gradient(45deg, #0056b3, #0096c7);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(45deg, #6c757d, #adb5bd);
+            box-shadow: 0 4px 15px rgba(108, 117, 125, 0.3);
+        }
+
+        .btn-secondary:hover {
+            background: linear-gradient(45deg, #495057, #6c757d);
+            box-shadow: 0 6px 20px rgba(108, 117, 125, 0.5);
+        }
+
+        .content-box {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            border-radius: 12px;
+            text-align: left;
+            margin-top: 20px;
+        }
+
+        .content-box h2 {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: #00d2ff;
+        }
+
+        .content-box ul {
+            list-style: none;
+        }
+
+        .content-box li {
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .content-box li:last-child {
+            border-bottom: none;
+        }
+
+        .time-info {
+            margin-top: 15px;
+            font-size: 0.85rem;
+            color: #a0a0b0;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Добро пожаловать в магазин!</h1>
+
+        <div class="nav-buttons">
+            <a href="{% url 'shopapp:products_list' %}" class="btn">📦 Товары</a>
+            <a href="{% url 'shopapp:orders_list' %}" class="btn">📋 Заказы</a>
+            <a href="/admin/" class="btn btn-secondary">⚙️ Админка</a>
+        </div>
+
+        <!-- Раздел со списком/данными -->
+        <div class="content-box">
+            <h2>Популярные продукты</h2>
+            <ul>
+                {% for product in products %}
+                    <li><strong>{{ product.name }}</strong> — ${{ product.price }}</li>
+                {% empty %}
+                    <li>Товары пока не добавлены.</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        {% if time_running %}
+            <p class="time-info">Время выполнения: {{ time_running }} сек.</p>
+        {% endif %}
+    </div>
+
+</body>
+</html>
